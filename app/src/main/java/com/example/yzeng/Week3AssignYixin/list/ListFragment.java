@@ -109,8 +109,9 @@ public class ListFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-       TodoNote todoNote = (TodoNote) adapterView.getItemAtPosition(position);
-       String  data = todoNote.getQuestion();
+       Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+       String data = cursor.getString(cursor.getColumnIndexOrThrow(DataSourceContract.TodoEntry.COLUMN_NAME_QUESTION));
+       //String  data = todoNote.getQuestion();
         //Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
         if (mListener != null) {
             mListener.onQuestionClick(data);
