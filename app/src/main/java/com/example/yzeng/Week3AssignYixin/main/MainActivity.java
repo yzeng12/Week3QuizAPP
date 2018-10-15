@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     TextView quizQuestion;
     CheckBox checkBox1, checkBox2, checkBox3, checkBox4;
     MainPresenter presenter;
-    int cursorPosition = 0;
+    public int cursorPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

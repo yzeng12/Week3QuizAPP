@@ -1,5 +1,8 @@
 package com.example.yzeng.Week3AssignYixin;
 
+import com.example.yzeng.Week3AssignYixin.main.MainActivity;
+import com.example.yzeng.Week3AssignYixin.main.MainPresenter;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,4 +17,17 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+    @Test
+    public void junitTest() {
+
+        MainActivity mainActivity = new MainActivity();
+        mainActivity.cursorPosition = 0;
+        MainPresenter mainPresenter = new MainPresenter(mainActivity);
+        mainPresenter.positionIncrease();
+        mainPresenter.positionIncrease();
+        mainPresenter.positionIncrease();
+        assertEquals(mainActivity.cursorPosition, 2);
+
+    }
+
 }
