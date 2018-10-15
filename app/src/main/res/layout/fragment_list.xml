@@ -2,14 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yzeng.Week3AssignYixin.ListFragment">
+    tools:context="com.example.yzeng.Week3AssignYixin.list.ListFragment">
 
 
 
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/listview"
-        android:entries="@array/questions"
         android:layout_height="match_parent" />
 
 </FrameLayout>

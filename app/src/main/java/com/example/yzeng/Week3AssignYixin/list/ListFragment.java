@@ -1,7 +1,7 @@
-package com.example.yzeng.Week3AssignYixin;
+package com.example.yzeng.Week3AssignYixin.list;
 
 import android.content.Context;
-import android.net.Uri;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
+import com.example.yzeng.Week3AssignYixin.R;
+import com.example.yzeng.Week3AssignYixin.data.source.local.DataSourceContract;
 
 
 /**
@@ -20,11 +24,12 @@ import android.widget.Toast;
  * Use the {@link ListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ListFragment extends Fragment implements
+        AdapterView.OnItemClickListener,ListContract.View {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+   /* private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";*/
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,20 +53,23 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     // TODO: Rename and change types and number of parameters
     public static ListFragment newInstance(String param1, String param2) {
         ListFragment fragment = new ListFragment();
-        Bundle args = new Bundle();
+        /*Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
         return fragment;
     }
 
+    ListPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        presenter = new ListPresenter(this);
+        presenter.getData();
+       /* if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
     }
 
     @Override
@@ -109,16 +117,19 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void setData(Cursor cursor) {
+        SimpleCursorAdapter cursorAdapter =
+                new SimpleCursorAdapter(getContext(),
+                        android.R.layout.simple_list_item_1,//row layout
+                        cursor,//data
+                        new String[]{DataSourceContract.TodoEntry.COLUMN_NAME_QUESTION},//from
+                        new int[]{android.R.id.text1},//textview of the layout
+                        0);
+        listView.setAdapter(cursorAdapter);
+    }
+
+
     public interface OnQuestionClickListener {
         // TODO: Update argument type and name
         void onQuestionClick(String question);

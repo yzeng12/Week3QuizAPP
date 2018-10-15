@@ -95,4 +95,12 @@ public class DataSourceDAO implements TaskDataSource {
         callBack.ShowQuiz(todoNote);
 
     }
+
+  @Override
+    public  void getAll(QuestionsCallBack questionsCallBack) {
+      Cursor cursor =   sqLiteDatabase.query(DataSourceContract.TodoEntry.TABLE_NAME, null, null, null, null,
+                null, null);
+      questionsCallBack.getAllQuestions(cursor);
+
+    }
 }
