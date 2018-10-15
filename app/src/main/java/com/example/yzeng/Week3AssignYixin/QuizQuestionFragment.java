@@ -7,7 +7,9 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
 
 
 /**
@@ -27,6 +29,7 @@ public class QuizQuestionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView questionTextView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +68,9 @@ public class QuizQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quiz_question, container, false);
+        View view = inflater.inflate(R.layout.fragment_quiz_question, container, false);
+         questionTextView = view.findViewById(R.id.questionTextView);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,11 +83,11 @@ public class QuizQuestionFragment extends Fragment {
 //    @Override
 //    public void onAttach(Context context) {
 //        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
+//        if (context instanceof OnQuestionClickListener) {
+//            mListener = (OnQuestionClickListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+//                    + " must implement OnQuestionClickListener");
 //        }
 //    }
 
@@ -90,6 +95,10 @@ public class QuizQuestionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void updateQuestion(String question) {
+         questionTextView.setText(question);
     }
 
     /**

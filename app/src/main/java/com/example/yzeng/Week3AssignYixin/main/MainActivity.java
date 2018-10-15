@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.yzeng.Week3AssignYixin.ListFragment;
+import com.example.yzeng.Week3AssignYixin.QuizQuestionFragment;
 import com.example.yzeng.Week3AssignYixin.R;
 import com.example.yzeng.Week3AssignYixin.data.TodoNote;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View{
+public class MainActivity extends AppCompatActivity implements MainContract.View,ListFragment.OnQuestionClickListener {
 
     TextView quizQuestion;
     CheckBox checkBox1, checkBox2, checkBox3, checkBox4;
@@ -66,5 +68,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 presenter.getquizQA(cursorPosition );
                 break;
         }
+    }
+
+    @Override
+    public void onQuestionClick(String question) {
+        QuizQuestionFragment questionFragment =
+                (QuizQuestionFragment) getFragmentManager().findFragmentById(R.id.fragment_quiz);
+        questionFragment.updateQuestion(question);
+
     }
 }

@@ -15,7 +15,7 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListFragment.OnFragmentInteractionListener} interface
+ * {@link OnQuestionClickListener} interface
  * to handle interaction events.
  * Use the {@link ListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -31,7 +31,7 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private String mParam2;
     ListView listView;
 
-    private OnFragmentInteractionListener mListener;
+    private OnQuestionClickListener mListener;
 
     public ListFragment() {
         // Required empty public constructor
@@ -75,22 +75,22 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+   /* public void onButtonPressed(String uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onQuestionClick(uri);
+        }
+    }*/
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnQuestionClickListener) {
+            mListener = (OnQuestionClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnQuestionClickListener");
         }
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
 
     @Override
     public void onDetach() {
@@ -102,6 +102,10 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
        String data =  adapterView.getItemAtPosition(position).toString();
         Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+        if (mListener != null) {
+            mListener.onQuestionClick(data);
+        }
+
 
     }
 
@@ -115,8 +119,8 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnQuestionClickListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onQuestionClick(String question);
     }
 }

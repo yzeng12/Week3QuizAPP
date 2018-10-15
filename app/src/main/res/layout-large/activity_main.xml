@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/fragment_list"
         android:name="com.example.yzeng.Week3AssignYixin.ListFragment"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="113dp" />
 
     <fragment
-        android:id="@+id/fragment2"
+        android:id="@+id/fragment_quiz"
         android:name="com.example.yzeng.Week3AssignYixin.QuizQuestionFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
