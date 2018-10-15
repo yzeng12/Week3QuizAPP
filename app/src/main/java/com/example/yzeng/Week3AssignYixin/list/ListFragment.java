@@ -13,6 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.yzeng.Week3AssignYixin.R;
+import com.example.yzeng.Week3AssignYixin.data.TodoNote;
 import com.example.yzeng.Week3AssignYixin.data.source.local.DataSourceContract;
 
 
@@ -65,7 +66,6 @@ public class ListFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new ListPresenter(this);
-        presenter.getData();
        /* if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -78,6 +78,7 @@ public class ListFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_list, container, false);
         listView = view.findViewById(R.id.listview);
+        presenter.getData();
         listView.setOnItemClickListener(this);
         return view;
     }
@@ -108,8 +109,9 @@ public class ListFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-       String data =  adapterView.getItemAtPosition(position).toString();
-        Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+       TodoNote todoNote = (TodoNote) adapterView.getItemAtPosition(position);
+       String  data = todoNote.getQuestion();
+        //Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
         if (mListener != null) {
             mListener.onQuestionClick(data);
         }
