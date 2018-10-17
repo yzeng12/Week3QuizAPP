@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         db = TodoRoomDataBase.getDatabase(this);
         mTodoDao = db.TodoDao();
 
+        //funny question
         TodoNoteRoom todoNote = new TodoNoteRoom("Question1 who is not Android trainer", "Ansari", "Shiva",
                 "abdul", "navneet");
         TodoNoteRoom todoNote1 = new TodoNoteRoom("Question2 which 3 training program is available at RJT", "android", "IOS",
