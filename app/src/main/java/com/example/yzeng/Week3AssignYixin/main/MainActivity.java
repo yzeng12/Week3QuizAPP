@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.example.yzeng.Week3AssignYixin.QuizQuestionFragment;
 import com.example.yzeng.Week3AssignYixin.R;
 import com.example.yzeng.Week3AssignYixin.data.TodoNote;
-import com.example.yzeng.Week3AssignYixin.data.source.local.TodoDao;
-import com.example.yzeng.Week3AssignYixin.data.source.local.TodoNoteRoom;
-import com.example.yzeng.Week3AssignYixin.data.source.local.TodoRoomDataBase;
+import com.example.yzeng.Week3AssignYixin.data.source.RoomDBA.TodoDao;
+import com.example.yzeng.Week3AssignYixin.data.source.RoomDBA.TodoNoteRoom;
+import com.example.yzeng.Week3AssignYixin.data.source.RoomDBA.TodoRoomDataBase;
 import com.example.yzeng.Week3AssignYixin.list.ListFragment;
 
 import java.util.List;
@@ -25,7 +25,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     MainPresenter presenter;
     public int cursorPosition = 0;
     private List<TodoNoteRoom> allTodoList;
-    private TodoNoteRoom todoNoteRoom;
+    private TodoNoteRoom[] todoNoteRoom = new TodoNoteRoom[3];
+
+
+
     //********
     TodoRoomDataBase db;
     private TodoDao mTodoDao;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         //initialize
         db = TodoRoomDataBase.getDatabase(this);
         mTodoDao = db.TodoDao();
+
+
 
         TodoNoteRoom todoNote = new TodoNoteRoom("Question1 who is not Android trainer", "Ansari", "Shiva",
                 "abdul", "navneet");
@@ -136,24 +141,27 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         protected Void doInBackground(Void... voids) {
 
             //List<String> question =mTodoDao.getQuestion();
-            String question = mTodoDao.getQuestion();
-            String option1 = mTodoDao.getOption1();
-            String option2 = mTodoDao.getOption2();
-            String option3 = mTodoDao.getOption3();
-            String option4 = mTodoDao.getOption4();
-            todoNoteRoom = new TodoNoteRoom(question, option1, option2, option3, option4);
-            Log.i("aaa", question.toString());
+            String[] question = mTodoDao.getQuestion();
+            String[] option1 = mTodoDao.getOption1();
+            String[] option2 = mTodoDao.getOption2();
+            String[] option3 = mTodoDao.getOption3();
+            String[] option4 = mTodoDao.getOption4();
+            //todoNoteRoom = new TodoNoteRoom(question, option1, option2, option3, option4);
 
+            for (int i = 0; i < 3; i++) {
+                todoNoteRoom[i] = new TodoNoteRoom(question[i], option1[i], option2[i], option3[i], option4[i]);
+            }
+            Log.i("aaa", question.toString());
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            quizQuestion.setText(todoNoteRoom.getQuestion());
-            checkBox1.setText(todoNoteRoom.getAnswer1());
-            checkBox2.setText(todoNoteRoom.getAnswer2());
-            checkBox3.setText(todoNoteRoom.getAnswer3());
-            checkBox4.setText(todoNoteRoom.getAnswer4());
+            quizQuestion.setText(todoNoteRoom[0].getQuestion());
+            checkBox1.setText(todoNoteRoom[0].getAnswer1());
+            checkBox2.setText(todoNoteRoom[0].getAnswer2());
+            checkBox3.setText(todoNoteRoom[0].getAnswer3());
+            checkBox4.setText(todoNoteRoom[0].getAnswer4());
 
 
 //            ArrayAdapter<Word> adapter = new ArrayAdapter<Word>(MainActivity.this,android.R.layout.simple_list_item_1,
@@ -182,4 +190,35 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             return null;
         }
     }
+    public void buttonListener2(View view) {
+        switch (view.getId()) {
+            case R.id.nextButton:
+                if (cursorPosition == 2) {
+                    return;
+                }
+                cursorPosition++;
+                quizQuestion.setText(todoNoteRoom[cursorPosition].getQuestion());
+                checkBox1.setText(todoNoteRoom[cursorPosition].getAnswer1());
+                checkBox2.setText(todoNoteRoom[cursorPosition].getAnswer2());
+                checkBox3.setText(todoNoteRoom[cursorPosition].getAnswer3());
+                checkBox4.setText(todoNoteRoom[cursorPosition].getAnswer4());
+                break;
+            case R.id.prevButton:
+                if (cursorPosition == 0) {
+                    return;
+                }
+                cursorPosition--;
+                quizQuestion.setText(todoNoteRoom[cursorPosition].getQuestion());
+                checkBox1.setText(todoNoteRoom[cursorPosition].getAnswer1());
+                checkBox2.setText(todoNoteRoom[cursorPosition].getAnswer2());
+                checkBox3.setText(todoNoteRoom[cursorPosition].getAnswer3());
+                checkBox4.setText(todoNoteRoom[cursorPosition].getAnswer4());
+                break;
+        }
+    }
+
+
+
+
+
 }
