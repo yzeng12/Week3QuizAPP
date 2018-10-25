@@ -46,19 +46,22 @@ public class Splash_login extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 String token = String.valueOf(loginResult.getAccessToken());
-                Log.i(TAG, "In onSuccess: AccessToken = " + token);
-                Intent intent =new Intent(Splash_login.this, MainActivity.class );
-                startActivity(intent);
+                Log.i(TAG, "In onSuccess button: AccessToken = " + token);
+//                Intent intent =new Intent(Splash_login.this, MainActivity.class );
+//                startActivity(intent);
             }
 
             @Override
             public void onCancel() {
                 // App code
+                Log.i(TAG, "In onCancel button:  = " );
             }
 
             @Override
             public void onError(FacebookException exception) {
                 // App code
+
+                Log.i(TAG, "In onError button: AccessToken = " + exception);
             }
         });
 
@@ -75,17 +78,21 @@ public class Splash_login extends AppCompatActivity {
                         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
                         /*String token = String.valueOf(loginResult.getAccessToken());*/
-                        Log.i(TAG, "In onSuccess: AccessToken = " + accessToken);
+                        Log.i(TAG, "In onSuccess manager: AccessToken = " + accessToken);
+                        Intent intent =new Intent(Splash_login.this, MainActivity.class );
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onCancel() {
                         // App code
+                        Log.i(TAG, "In onCancel manager: AccessToken = " );
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
+                        Log.i(TAG, "In onError manager: AccessToken = " );
                     }
                 });
 
